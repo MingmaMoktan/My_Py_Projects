@@ -1,0 +1,79 @@
+import sys
+import discord
+
+# discordToken = "" # Your bot token here (https://discord.com/developers/applications/ and tab Bot -> Token -> Reset Token -> Copy the token here)
+name = "" # Your bot name here
+
+# if (discordToken == ""): sys.exit("ERROR: Please set the discord token.")
+if (name == ""): sys.exit("ERROR: Please set the name of the bot.")
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = discord.Client(intents=intents)
+
+term_dict = {}
+todo_dict = {}
+
+@client.event
+async def on_ready():
+  print(f'We have logged in as {client.user}')
+
+@client.event
+async def on_message(message : discord.message.Message):
+    if message.author == client.user: return # We don't want to reply to ourselves
+    if message.content.startswith(name):
+        print(f"{message.author} says: {message.content}")
+        
+        if message.content.startswith(f'{name} Hi'):
+            await message.channel.send('I have joined into the server.')
+    if message.content.startswith(f"{name} set"): # set term definition
+        msg = message.content.strip()
+        parts = msg.split(" ",3)
+        if len(parts) == 4:
+            term, definition = parts[2], parts[3]
+            term_dict[term] = definition
+            await message.channel.send(f"The {term} has been set.")
+        elif len(parts) == 3: # set term definition
+            print("2")
+            term = parts[2]
+            if term in term_dict:
+                del term_dict[term]
+                await message.channel.send(f"The {term} has been removed.")
+        else:
+            print("3")
+            await message.channel.send(f"The {term} does not exist.")
+    elif message.content.startswith(f"{name} get"):
+        msg = message.content.strip()
+        parts = msg.split()
+        if len(parts)<3:
+            await message.channel.send(f"Please provide a term.")
+            return
+        
+        term = parts[2]
+        if term in term_dict.keys():
+            await message.channel.send(f"The {term}: {term_dict[term]}")
+        else:
+            await message.channel.send("I don't know this.")
+            
+            
+# Adding the todo list here and implementing it here.
+            
+    if message.content.startswith(f"{name} todo"): # Adding todo
+        msg = message.content.strip().lower()
+        item = msg.replace(f"{name} todo", "").strip()
+        # print(len(item))
+        if len(item)<1:
+            await message.channel.send("Please provide an item.")
+        if todo_dict:
+            next_key = max(todo_dict.keys())+1
+        else:
+            next_key = 1
+        todo_dict[next_key] = item
+        print(todo_dict)
+        
+        # printing the todo list now
+        if message.content.startswith(f"{name} todo"):
+            todo_items = f"{todo_dict.keys},:,{todo_dict.values}"
+            await message.channel.send(todo_items)
+client.run(discordToken)
