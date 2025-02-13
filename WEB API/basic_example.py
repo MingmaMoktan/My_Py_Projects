@@ -1,7 +1,7 @@
 import requests
 import json
 
-key = "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"
+key = ""
 max_completion_tokens = 50
 temperature = 1
 old_responses = []
