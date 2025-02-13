@@ -4,6 +4,7 @@ import json
 key = "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"
 max_completion_tokens = 50
 temperature = 1
+old_responses = []
 
 def chatgpt_query(prompt):
     headers = {
@@ -21,12 +22,19 @@ def chatgpt_query(prompt):
         "temperature": temperature,
         "model": "gpt-4o"
     }
+    
+    old_responses.append({
+      "role": "user",
+      "content": prompt
+    })
 
     r = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(data))
     r_json = r.json()
-    print(r_json)
+    old_responses.append(r_json["choices"][0]["message"])
+    # print(r_json)
     print("\n")
-
+    print(old_responses[0]['content'])
+    print("\n")
     print(r_json["choices"][0]["message"]["content"])
     return prompt
 
@@ -36,4 +44,4 @@ while True:
         break
     else:
         response = chatgpt_query(prompt)
-        print(response)
+        # print(response)
