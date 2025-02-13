@@ -4,6 +4,3 @@ def add_task(tasks, title, description=""): # Here description = "" is setting t
     new_task = Task(title, description)
     tasks.append(new_task)
     return tasks
-
-def remove_task(tasks, index):
-    if 
