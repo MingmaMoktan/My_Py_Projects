@@ -1,7 +1,7 @@
 from logger import Logger, LogLevel
 
 class DatabaseManager:
-    """Handles database operations such as creating, reading, updating, and deleting contacts."""
+    """This Handles database operations such as creating, reading, updating, and deleting contacts."""
     
     def __init__(self, db_name: str, logger: Logger):
         self.db_name = db_name
@@ -18,36 +18,36 @@ class DatabaseManager:
             raise ConnectionError(msg)
 
     def create_table(self) -> None:
-        """Simulates creating a contacts table."""
+        """This simulates creating a contacts table."""
         self.logger.info("Table created")
         print("Creating contacts table...")
 
     def create_contact(self, name: str, email: str, phone: str) -> None:
-        """Adds a contact to the database."""
+        """This is the function that adds contact to the database."""
         self.logger.info(f"Contact created:\n - Name: {name}\n - Email: {email}\n - Phone: {phone}")
         print(f"Adding contact: {name}, {email}, {phone}")
 
     def read_contacts(self) -> list[tuple[str, str, str]]:
-        """Returns a list of contacts."""
+        """This returns a list of contacts."""
         print("Listing all contacts...")
         return [("John Doe", "john.doe@example.com", "123-456-7890"), 
                 ("Mary Sue", "mary.sue@example.com", "223-456-7890")]
 
     def search_contact(self, contact_id: str) -> tuple[str, str, str]:
-        """Searches for a contact by ID."""
+        """This Searches for a contact by ID."""
         print(f"Searching for '{contact_id}'")
         return ("Some Name", "email@example.com", "123-123-1234")
 
     def update_contact(self, contact_id: str, name: str, email: str, phone: str) -> None:
-        """Updates an existing contact."""
+        """This function is used for updating an existing contact."""
         self.logger.info(f"Contact updated:\n - ID: {contact_id}\n - Name: {name}\n - Email: {email}\n - Phone: {phone}")
         print(f"Updating contact {contact_id} to: {name}, {email}, {phone}")
 
     def delete_contact(self, contact_id: str) -> None:
-        """Deletes a contact by ID."""
+        """This is the function that deletes a contact by using ID."""
         self.logger.warning(f"Contact deleted:\n - ID: {contact_id}")
         print(f"Deleting contact with ID: {contact_id}")
 
     def close(self) -> None:
-        """Closes the database connection."""
+        """This is the function that closes the database function."""
         print("Closing the database connection...")

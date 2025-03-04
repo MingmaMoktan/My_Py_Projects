@@ -13,7 +13,7 @@ class Logger:
         self.level = level
 
     def _log(self, message: str, level: LogLevel) -> None:
-        """Logs a message if the log level is sufficient."""
+        """This logs a message if the log level is sufficient."""
         if level.value >= self.level.value:
             print(message)
 
