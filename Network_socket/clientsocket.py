@@ -22,6 +22,7 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((HOST, PORT))
 
 # Send the serialized JSON data to the server
+# Here is we try to send the string data types then it will not send as the server only receives the jason data.
 client_socket.sendall(serialized_data.encode())
 
 # Receive the response from the server
