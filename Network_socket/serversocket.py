@@ -36,7 +36,11 @@ try:
             # If no data is received, break the inner loop
             if not data:
                 break
-
+            
+            conn.sendall(response_http.encode())
+            
+            # conn.sendall("David".encode())
+            '''
             # Decode and load the JSON data
             json_data = json.loads(data.decode())
 
@@ -45,7 +49,8 @@ try:
 
             # Send a response back to the client
             response = 'Data received successfully'
-            conn.sendall(response.encode())
+            conn.sendall(response.encode()) 
+            '''
 
 except Exception as e:
     print("Problem with the connection:")
