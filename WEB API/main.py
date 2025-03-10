@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 
 app = FastAPI()
 
@@ -36,4 +36,13 @@ async def cartRemove(itemName, amount=1):
         "message": f"{amount} item {itemName} has been removed.",
         "itemName": itemName,
         "amount": amount
+    }
+
+
+@app.post("/signup")
+async def signup(email: str = Form(), firstname: str = Form()):
+    return {
+        "message": "user was added",
+        "firstname": firstname,
+        "email": email
     }
