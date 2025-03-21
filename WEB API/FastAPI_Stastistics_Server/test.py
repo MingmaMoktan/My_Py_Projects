@@ -5,7 +5,7 @@ import json
 endpoint = "http://0.0.0.0:8000/api/factorial/"
 
 
-params = {"number": 3}  
+params = {"number": 6}  
 response = requests.post(endpoint, data=params)
 data = response.json()
 print(data)
