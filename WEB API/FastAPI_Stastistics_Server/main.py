@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Form
+import json
 from statistics import median, variance, pstdev
 
 app = FastAPI()
@@ -13,7 +14,7 @@ async def factorial(number: int = Form(...)):
             "status": 1,
             "parameter": number,
             "action": "factorial",
-            "result": "1"
+            "result": 1
         }
         
         result = 1
@@ -35,18 +36,20 @@ async def factorial(number: int = Form(...)):
 
 
 @app.post("/api/median")
-async def calculate_median(numbers: list[float] = Form(...)):
+async def calculate_median(numbers: str = Form(...)):
     try:
-        if not numbers:
-            raise ValueError("Median can be calculated only for a non-empty list of numerical data.")
-        else:
-            result = median(numbers)  
-            return {
-                "status": 1,
-                "parameter": numbers,
-                "action": "median",
-                "result": result
-            }
+        # I used AI to generate this part of logic and copied same for variance and pstdev.
+        numbers_list = json.loads(numbers)
+        if not isinstance(numbers_list, list) or not all(isinstance(x, (int, float)) for x in numbers_list):
+            raise ValueError("Input must be a list of numbers.")
+
+        result = median(numbers_list)
+        return {
+            "status": 1,
+            "parameter": numbers_list,
+            "action": "median",
+            "result": result
+        }
     except Exception as e:
         return {
             "status": 0,
@@ -54,18 +57,19 @@ async def calculate_median(numbers: list[float] = Form(...)):
         }
 
 @app.post("/api/variance")
-async def calculate_variance(numbers: list[float] = Form (...)):
+async def calculate_variance(numbers: str = Form (...)):
     try:
-        if not numbers:
-            raise ValueError('Variance can be calculated only for a non-empty list of numerical data.')
-        else:
-            result = variance(numbers)
-            return {
-                "status": 1,
-                "parameter": numbers,
-                "action": "variance",
-                "result": result
-            }
+        numbers_list = json.loads(numbers)
+        if not isinstance(numbers_list, list) or not all(isinstance(x, (int, float)) for x in numbers_list):
+            raise ValueError("Input must be a list of numbers.")
+
+        result = variance(numbers_list)
+        return {
+            "status": 1,
+            "parameter": numbers_list,
+            "action": "variance",
+            "result": result
+        }
     except Exception as e:
         return {
             "status": 0,
@@ -73,18 +77,19 @@ async def calculate_variance(numbers: list[float] = Form (...)):
         }
     
 @app.post("/api/pstdev")
-async def calculate_pstdev(numbers: list[float] = Form (...)):
+async def calculate_pstdev(numbers: str = Form (...)):
     try:
-        if not numbers:
-            raise ValueError('Pstdev can be calculated only for a non-empty list of numerical data.')
-        else:
-            result = pstdev(numbers)
-            return {
-                "status": 1,
-                "parameter": numbers,
-                "action": "pstdev",
-                "result": result
-            }
+        numbers_list = json.loads(numbers)
+        if not isinstance(numbers_list, list) or not all(isinstance(x, (int, float)) for x in numbers_list):
+            raise ValueError("Input must be a list of numbers.")
+
+        result = pstdev(numbers_list)
+        return {
+            "status": 1,
+            "parameter": numbers_list,
+            "action": "pstdev",
+            "result": result
+        }
     except Exception as e:
         return {
             "status": 0,
