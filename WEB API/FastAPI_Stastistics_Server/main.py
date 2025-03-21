@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Form
-from statistics import median
+from statistics import median, variance, pstdev
 
 app = FastAPI()
 
@@ -18,7 +18,7 @@ async def factorial(number: int = Form(...)):
         
         result = 1
         for i in range(1, number + 1):
-            result *= i
+            result = result*i
 
         return {
             "status": 1,
@@ -45,6 +45,44 @@ async def calculate_median(numbers: list[float] = Form(...)):
                 "status": 1,
                 "parameter": numbers,
                 "action": "median",
+                "result": result
+            }
+    except Exception as e:
+        return {
+            "status": 0,
+            "message": str(e)
+        }
+
+@app.post("/api/variance")
+async def calculate_variance(numbers: list[float] = Form (...)):
+    try:
+        if not numbers:
+            raise ValueError('Variance can be calculated only for a non-empty list of numerical data.')
+        else:
+            result = variance(numbers)
+            return {
+                "status": 1,
+                "parameter": numbers,
+                "action": "variance",
+                "result": result
+            }
+    except Exception as e:
+        return {
+            "status": 0,
+            "message": str(e)
+        }
+    
+@app.post("/api/pstdev")
+async def calculate_pstdev(numbers: list[float] = Form (...)):
+    try:
+        if not numbers:
+            raise ValueError('Pstdev can be calculated only for a non-empty list of numerical data.')
+        else:
+            result = pstdev(numbers)
+            return {
+                "status": 1,
+                "parameter": numbers,
+                "action": "pstdev",
                 "result": result
             }
     except Exception as e:
