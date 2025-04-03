@@ -1,0 +1,60 @@
+1. Set up
+
+On ubuntu (WSL)
+
+- sudo apt install python3-venv
+- pip3 install virtualenv
+
+Mac:
+pip3 install virtualenv
+
+# Creating the new virtaual environment
+python3 -m venv venv
+
+# Activating the virtual envirionment
+source venv/bin/activate
+
+# List all pip packages
+pip3 freeze
+
+# Install the pip packages for django
+pip3 install django
+pip3 install django-cors-headers
+
+# Saving the pip packages to a file
+pip3 freeze > requirements.txt
+
+# Deactivating the virtual environment
+deactivate
+
+# Remoing the virtual environment and installing the packages from the requirements.txt
+rm -r venv
+
+# To install all the packages again from the requirements.txt
+pip3 install -r requirements.txt
+
+
+
+
+
+
+
+
+
+
+
+# Setting up the project
+django-admin startproject chatbot (This will create the folder called chatbot inside chabot which is your main project folder)
+There are many files but we will divide them into two parts:
+1. The files we don't modify
+    - __init__.py (Tells python that this folder is a python package)
+    - wsgi.py (Python uses wsgi server for web development. This file contains basic configuration for your wsgi web server.)
+    - asgi.py (Asgi is later standard on Python for web servers. This file contains configurations for asgi server.)
+
+2. The files we modify
+    - urls.py (Contains project URL routes. Example: store/ shows html page store.html)
+    -  settings.py (Your main settings file. Contains application and middleware applications and project settings.)
+
+# manage.py
+There is also one file inside the chatbot 'manage.py' which is used to manage the project. 
+script:     python3 manage.py runserver
