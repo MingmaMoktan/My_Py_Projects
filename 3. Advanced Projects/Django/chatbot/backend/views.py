@@ -5,7 +5,14 @@ from django.http import HttpResponse
 def backend(request, slug=None):
     return HttpResponse("<p>Hello from the backend-side</p>")
 
+import json
+from .responses import bot_response
+
 def get_chat_response(request, slug=None):
-    return HttpResponse("Hello from get chat response")
-# Placeholder for chat response logic
-    return HttpResponse("<p>This is a placeholder for chat response</p>")
+    data = request.GET
+    message = data.get("message")
+    
+    response = {
+        "message": bot_response(message)
+    }
+    return HttpResponse(json.dumps(response))
