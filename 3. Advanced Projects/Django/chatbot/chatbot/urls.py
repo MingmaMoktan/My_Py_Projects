@@ -33,7 +33,6 @@ def responseAbout(request, slug=None):
                         ''')
 
 urlpatterns = [
-    path("",response),
-    path("about/", responseAbout)
-    path('signup/')
-]
+    path("", response),  
+    path("about/", responseAbout),
+    ]
