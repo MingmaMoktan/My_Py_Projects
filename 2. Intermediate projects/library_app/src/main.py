@@ -1,62 +1,36 @@
-import json
-
-lib_data = []
-
-def ld_lib():
-    global lib_data
-    try:
-        with open('./resources/library.json', 'r') as fl:
-            lib_data = json.load(fl)
-    except FileNotFoundError:
-        lib_data = []
-
-def sv_lib():
-    with open('./resources/library.json', 'w') as fl:
-        json.dump(lib_data, fl, indent=4)
-
-def sh_bks():
-    if not lib_data:
-        print("Library empty.")
-    else:
-        for bk in lib_data:
-            print(f"Title: {bk['title']}, Writer: {bk['author']}")
-
-def ad_bk():
-    t = input("Book title: ")
-    a = input("Writer name: ")
-    lib_data.append({'title': t, 'author': a})
-    print("Book added.")
-
-def dl_bk():
-    t = input("Book title to remove: ")
-    global lib_data
-    lib_data = [bk for bk in lib_data if bk['title'] != t]
-    print("Book removed.")
+"""
+I created this main.py file to manage the library of books.
+This is the entry point of the program.
+"""
+from library import Library
+import storage
 
 def main():
-    ld_lib()
-
+    """
+    Main function to run the library management system.
+    """
+    library = Library()
+    library.load(storage.load_library)
+    
     while True:
-        print("\nLib System")
+        print("\nLibrary Management System")
         print("1. Show Books")
-        print("2. Insert Book")
-        print("3. Remove Book")
-        print("4. Save & Exit")
-
-        ch = input("Choice: ")
-
-        if ch == '1':
-            sh_bks()
-        elif ch == '2':
-            ad_bk()
-        elif ch == '3':
-            dl_bk()
-        elif ch == '4':
-            sv_lib()
-            print("Saved. Bye!")
+        print("2. Add Book")
+        print("3. Delete Book")
+        print("4. Save and Exit")
+        choice = input("Enter your choice: ")
+        
+        if choice == '1':
+            library.show_books()
+        elif choice == '2':
+            library.add_book()
+        elif choice == '3':
+            library.delete_book()
+        elif choice == '4':
+            library.save(storage.save_library)
             break
         else:
-            print("Wrong. 1-4 only.")
+            print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()
