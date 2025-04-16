@@ -2,6 +2,7 @@
 import random
 import json
 from django.http import HttpResponse
+import requests
 
 OPENWEATHER_API_KEY = "59c9f123b60d327aac00144fec861ab5"
 
@@ -14,17 +15,25 @@ def get_first_response(request, slug=None):
 last_message = None
 
 def bot_response(request, message):
-    global last_message  
+    global last_message
     try:
         message_data = json.loads(message)
         text = message_data.get('text', '')
     except (json.JSONDecodeError, TypeError):
-        text = message
+        text = message    
 
     # 1.4 Check for repeated message
     if last_message == text:
         response = {
             "message": "STOP REPEATING YOURSELF"
+        }
+    elif "hello" in text.lower():
+        response = {
+            "message": "Hello! How can I assist you today?"
+        }
+    elif "bye" in text.lower():
+        response = {
+            "message": "Goodbye! Have a great day!"
         }
     # 1.2 Images
     elif "gimme image" in text.lower():
@@ -36,31 +45,34 @@ def bot_response(request, message):
     # 1.3 Wikipedia links
     elif "tell me about" in text.lower():
         topic = text.split("tell me about", 1)[1].strip()
-        topic_url = topic.replace(" ", "_")
-        response = {
-            "message": f'<a href="https://en.wikipedia.org/wiki/{topic_url}" target="_blank">Click here for more information on {topic}</a>'
-        }
-    # 1.5 When the user types in weather in <city>, for example, weather in Pori, the bot should respond back with the weather in Pori. Use some external Web API to fetch the weather.
+        response = (
+            {"message": f'<a href="https://en.wikipedia.org/wiki/{topic.replace(" ", "_")}" target="_blank">Click here for more information on {topic}</a>'}
+            )
+    # 1.5 Weather information
     elif "weather in" in text.lower():
         city = text.split("weather in", 1)[1].strip()
-        url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHER_API_KEY}&units=metric"
-        try:
-            data = request.get(url, timeout=5).json()
-            if data.get("cod") == 200:
-                main = data["main"]
-                weather = data["weather"][0]
-                weather_info = (
-                    f"Weather in {city}:\n"
-                    f"Temp: {main['temp']}°C\n"
-                    f"Pressure: {main['pressure']} hPa\n"
-                    f"Humidity: {main['humidity']}%\n"
-                    f"Description: {weather['description']}"
+        if city:
+            url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHER_API_KEY}&units=metric"
+            try:
+                data = requests.get(url, timeout=5).json()
+                if data.get("cod") == 200:
+                    main = data["main"]
+                    weather = data["weather"][0]
+                    weather_info = (
+                        f"Weather in {city}:\n"
+                        f"Temp: {main['temp']}°C\n"
+                        f"Pressure: {main['pressure']} hPa\n"
+                        f"Humidity: {main['humidity']}%\n"
+                        f"Description: {weather['description']}"
                     )
-            else:
-                weather_info = "City Not Found"
-        except Exception as e:
-            weather_info = f"Error fetching weather data: {e}"
-        response = {"message": weather_info}
+                else:
+                    weather_info = "City Not Found"
+            except Exception:
+                weather_info = "Sorry, I couldn't fetch the weather right now."
+            response = {"message": weather_info}
+        else:
+            response = {"message": "Please specify a city after 'weather in'."}
+
     # 1.6 Help command
     elif "help" in text.lower():
         response = {
