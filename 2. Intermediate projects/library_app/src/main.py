@@ -2,8 +2,8 @@
 I created this main.py file to manage the library of books.
 This is the entry point of the program.
 """
-from library import Library
-import storage
+from src.library import Library
+import src.storage as storage
 
 def main():
     """

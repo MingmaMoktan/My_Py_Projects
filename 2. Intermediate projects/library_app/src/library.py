@@ -5,7 +5,7 @@ The library is stored in a JSON file named library.json.
 """
 import json
 from typing import List
-from book import Book, BookFactory
+from .book import Book, BookFactory
 
 class Library:
     """

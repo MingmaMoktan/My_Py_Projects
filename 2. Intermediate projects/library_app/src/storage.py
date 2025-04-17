@@ -6,7 +6,7 @@ The library is stored in a JSON file named library.json.
 
 import json
 from typing import List
-from book import Book
+from .book import Book
 
 LIBRARY_FILE = './resources/library.json'
 
