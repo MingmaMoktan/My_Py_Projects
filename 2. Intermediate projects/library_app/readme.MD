@@ -124,7 +124,6 @@ class Library:
     Writer name: F. Scott Fitzgerald
     Book added.
 
-
 ---
 
 ## Documentation Standards
