@@ -1,25 +1,9 @@
-# import unittest
-# from src.book import Book, BookFactory
-# from src.library import Library
-# import src.storage as storage
-# import sys
-# import os
-
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-# import json
-
-# tests/unit_test.py
-import sys
-import os
-
-# Add project root to Python path FIRST
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-# THEN import modules
+import unittest
 from src.book import Book, BookFactory
 from src.library import Library
 import src.storage as storage
-import unittest
+import sys
+import os
 
 class TestBookFactory(unittest.TestCase):
     def test_create_book(self):
