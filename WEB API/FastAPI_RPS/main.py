@@ -5,6 +5,13 @@ app = FastAPI()
 
 sessions = {}
 
+@app.get('/')
+async def root():
+    return {
+        'status': 1,
+        'message': 'Welcome to Rock Paper Scissors API. Use /docs to see the documentation.'
+    }
+
 @app.get('/api/start_session')
 async def start_session():
     session_id = str(random.randint(1000, 10000))
