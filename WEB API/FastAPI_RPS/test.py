@@ -11,14 +11,16 @@ print(json.dumps(data, indent=4))
 # Player 1
 session_id = data.get("session_id")
 endpoint = "http://0.0.0.0:8000/api/join_session/"
-params = {"session_id": session_id, "username": "David", "choice": "scissors"}
-response = requests.get(endpoint, params=params)
+response = requests.get(endpoint, 
+                        params={"session_id": session_id, "username": "David", "choice": "scissors"}
+                        )
 data = response.json()
 print(json.dumps(data, indent=4))
 
 # Player 2
-params = {"session_id": session_id, "username": "Salome", "choice": "paper"}
-response = requests.get(endpoint, params=params)
+response = requests.get(endpoint, 
+                        params={"session_id": session_id, "username": "Salome", "choice": "paper"}
+                        )
 data = response.json()
 print(json.dumps(data, indent=4))
 
