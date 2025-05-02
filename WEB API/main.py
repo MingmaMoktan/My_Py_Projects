@@ -42,10 +42,7 @@ user = {}
 
 @app.post("/signup")
 async def signup(email: str = Form(), firstname: str = Form()):
-    user[email] = {
-        "firstname": firstname
-    }
-    print(user)
+
     return {
         "message": "user was added",
         "firstname": firstname,
