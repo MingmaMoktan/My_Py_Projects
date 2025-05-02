@@ -1,6 +1,26 @@
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, Request
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
+
+@app.get("/page",response_class=HTMLResponse)
+async def page():
+    html = '''
+    <html>
+        <head>
+            <title>My Page</title>
+        </head>
+        <body>
+            <h1>My Page</h1>
+            <form action="/signup" method="post">
+                <input type="text" name="email" placeholder="Email" required>
+                <input type="text" name="firstname" placeholder="First Name" required>
+                <button type="submit">Submit</button>
+            </form>
+        </body>
+    </html>
+    '''
+    return HTMLResponse(content=html)
 
 @app.get("/")
 async def root():
