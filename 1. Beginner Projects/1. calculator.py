@@ -1,48 +1,60 @@
-# This is my calculator app.
-
+# Here is my simple calculator app.
+# Here I used the class so that I can make this app modular and use whenever I want.
 class Calculator:
-    def __init__(self):
-        self.result = 0
+    """
+    Here is a simple calculator class to perform basic operations. 
+    Methods:
+        add(a,b): Returns the sum of two numbers.
+        sub(a,b): Returns the subtraction of two numbers.
+        mul(a,b): Returns the multiplication of two numbers.
+        div(a,b): Returns the division of two numbers.
+        Here in each function a and b are two parameters which are taken as the numbers.
+    """
+    def add(self, a, b):
+        return a+b
+    def sub(self, a, b):
+        return a-b
+    def mul(self, a, b):
+        return a*b
+    def div(self, a, b):
+        return a/b
     
-    def add(self, x, y):
-        return x + y
-    def subtract(self, x, y):
-        return x - y
-    def multiply(self, x, y):
-        return x * y
-    def divide(self, x, y):
-        if y != 0:
-            return x/y
-        return
-        
 def main():
     calc = Calculator()
     while True:
-        print("\n Select the operation:")
-        print("1. Add")
-        print("2. Subtract")
-        print("3. Multiply")
-        print("4. Divide")
-        
-        choice = int(input("Enter the number: "))
-        
-        if choice == 5:
-            print("Exiting the calculator. Good bye!")
-            break
-    
-        num1 = float(input("Enter the first number:"))
-        num2 = float(input("Enter the second number:"))
-        
-        if choice == 1:
-            print(f"The sum of {num1} and {num2} is {calc.add(num1, num2)}")
-        elif choice == 2:
-            print(f"The differene of {num1} and {num2} is {calc.subtract(num1, num2)}")
-        elif choice == 3:
-            print(f"The product of {num1} and {num2} is {calc.multiply(num1, num2)}")
-        elif choice == 4:
-            print(f"The division of {num1} and {num2} is {calc.divide(num1, num2)}")
-        else:
-            print("Invalid number.")
-        
+        """
+        Here using the while loop basically keeps the calculator app running until the "q" value is passed inside the operation which breaks the loop and takes out of this application.
+        """
+        try:
+            print("What kind of operation do you want to perform.\nPress + for addition\nPress - for the subtraction.\nPress * for multiplication.\nPress / for division.\nPress q to quit.")
+            operation = input("Enter the Operation: ")
+            
+            o = operation.lower()
+            if o=="q":
+                print("Exiting the calculator. Bye")
+                break
+                
+            a = float(input("Enter the first number: "))
+
+            b = float(input("Enter the second number: "))
+            
+            match o:
+                case "+":
+                    print(f"The sum of {a} and {b} is {calc.add(a,b)}")
+                case "-":
+                    print(f"The subtraction between {a} and {b} is {calc.sub(a,b)}")
+                case "*":
+                    print(f"The product of {a} and {b} is {calc.mul(a,b)}")
+                case "/":
+                    if b == 0:
+                        print("Error: Division by zero is not allowed.")
+                    else:    
+                        print(f"The division {a} by {b} is {calc.div(a,b)}")
+                case _:
+                    print("Enter the proper operation to perform the calculation.")
+                    
+        except Exception as e:
+            print("Enter the valid number.")
+            
 if __name__ == "__main__":
     main()
