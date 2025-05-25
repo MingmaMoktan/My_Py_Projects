@@ -1,5 +1,12 @@
 """
 Here to use this chatbot application you can use the openAI Key by purchasing.
+You should also install the openAi by using the following command.4
+- pip install openai
+
+And you can also see the documentation how to use the openai
+Here is the url for the documentation.
+url = https://platform.openai.com/docs/overview
+
 You can go the url = https://platform.openai.com/settings/organization/api-keys
 
 And there you can purchase the key in minimal price and then use this chatbot application.
